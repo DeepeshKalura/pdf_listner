@@ -19,7 +19,12 @@ class AuthenticationScreen extends StatelessWidget {
             controller: TextEditingController(),
             hintText: "Enter Your Email",
             labelText: "Email",
-            prefixIconData: Icons.email)
+            prefixIconData: Icons.email),
+        CustomTextField(
+            controller: TextEditingController(),
+            hintText: "Enter Your Password",
+            labelText: "Password",
+            prefixIconData: Icons.password)
       ]),
     ));
   }
