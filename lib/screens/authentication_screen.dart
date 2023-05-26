@@ -38,6 +38,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
             hintText: "Enter Your Email",
             labelText: "Email",
             prefixIconData: Icons.email),
+
         SizedBoxHelper.sizedBox20,
         CustomTextField(
             controller:passwordController,
@@ -58,7 +59,6 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
       CustomButton(onPressed: (){},title: "Register",),
         MaterialButton(onPressed: (){},child: Text("Already have an account? Login"),),
         MaterialButton(onPressed: (){},child: Text("Forget Password?"),)
-
       ]),
     ));
   }
