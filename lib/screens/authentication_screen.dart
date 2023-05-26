@@ -13,15 +13,17 @@ class AuthenticationScreen extends StatefulWidget {
 }
 
 class _AuthenticationScreenState extends State<AuthenticationScreen> {
-  TextEditingController userNameController=TextEditingController();
+  TextEditingController userNameController=TextEditingController(); // bhai inno na ap private bana
   TextEditingController emailController=TextEditingController();
   TextEditingController passwordController=TextEditingController();
   TextEditingController confirmPasswordController=TextEditingController();
+  
+//   Dispose Bhi ker dena sare controller ko
+
   GlobalKey<FormState>_key=GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
           body: ScreenBackground(
             child: Padding(
       padding: const EdgeInsets.all(20),
@@ -34,8 +36,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
               ),
               SizedBoxHelper.sizedBox20,
               CustomTextField(
-                  validator: (String?value){
-
+                  validator: (String? value){
                     if(value!.isEmpty){
                    return "please enter a username";
                     }
@@ -64,7 +65,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                   prefixIconData: Icons.email),
               SizedBoxHelper.sizedBox20,
               CustomTextField(
-                validator: (String?value){
+                validator: (String? value){
 
                   if(value!.isEmpty){
                     return "please enter a username";
@@ -84,7 +85,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
               ),
               SizedBoxHelper.sizedBox20,
               CustomTextField(
-                validator: (String?value){
+                validator: (String? value){
 
                   if(value!.isEmpty){
                     return "please enter a value";
@@ -117,5 +118,45 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
           ),
 
     );
+      child: ListView(children: [
+        Image.asset(
+          "assets/images/icon_image.png",
+          height: 150,
+        ),
+        SizedBoxHelper.sizedBox20,
+        CustomTextField(
+            controller: userNameController,
+            hintText: "Enter Your Username",
+            labelText: "Username",
+            prefixIconData: Icons.person),
+        SizedBoxHelper.sizedBox20,
+        CustomTextField(
+            controller: emailController,
+            hintText: "Enter Your Email",
+            labelText: "Email",
+            prefixIconData: Icons.email),
+
+        SizedBoxHelper.sizedBox20,
+        CustomTextField(
+            controller:passwordController,
+            hintText: "Enter Your Password",
+            labelText: "Password",
+            prefixIconData: Icons.password,
+            suffixIcon:const Icon(Icons.remove_red_eye),
+        ),
+        SizedBoxHelper.sizedBox20,
+        CustomTextField(
+            controller: confirmPasswordController,
+            hintText: "Enter the password again",
+            labelText: "Confirm Password",
+            prefixIconData: Icons.password,
+            suffixIcon:const Icon(Icons.remove_red_eye),
+        ),
+        SizedBoxHelper.sizedBox20,
+      CustomButton(onPressed: (){},title: "Register",),
+        MaterialButton(onPressed: (){},child: Text("Already have an account? Login"),),
+        MaterialButton(onPressed: (){},child: Text("Forget Password?"),)
+      ]),
+    ));
   }
 }
