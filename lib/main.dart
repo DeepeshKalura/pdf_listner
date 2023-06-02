@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-          inputDecorationTheme:const InputDecorationTheme(
+          inputDecorationTheme: const InputDecorationTheme(
               border: OutlineInputBorder(),
               focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.blue, width: 2)))),
