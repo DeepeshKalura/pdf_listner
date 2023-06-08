@@ -20,7 +20,10 @@ class ScreenBackground extends StatelessWidget {
             Colors.white,
             Colors.blue
           ])),
-      child: child,
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: child,
+      ),
     );
   }
 }
