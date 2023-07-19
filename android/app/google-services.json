@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "24135724251",
+    "project_id": "docsaver-bcd94",
+    "storage_bucket": "docsaver-bcd94.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:24135724251:android:ad17dab778a119d79630fe",
+        "android_client_info": {
+          "package_name": "com.example.pdf_listner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "24135724251-999prs2k9icsdc6n9cqngj96lt3baani.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAepnnJypn3k3xs7C9eMQBAAI9I7_M_58E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "24135724251-999prs2k9icsdc6n9cqngj96lt3baani.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "24135724251-vgk6ba3qspim3bk9lrmi73rllb0v1nn3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.pdfListner"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

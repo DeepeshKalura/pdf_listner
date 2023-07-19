@@ -119,7 +119,15 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                 CustomButton(
                   onPressed: () {
                     if (_key.currentState!.validate()) {
-                      print("all things are OK");
+                      if (provider.isLogin) {
+                        provider.signIn(
+                            email: emailController.text,
+                            password: passwordController.text);
+                      } else {
+                        provider.signUp(
+                            email: emailController.text,
+                            password: passwordController.text);
+                      }
                     }
                   },
                   title: provider.isLogin ? "login" : "Register",
