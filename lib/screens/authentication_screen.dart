@@ -18,8 +18,10 @@ class AuthenticationScreen extends StatefulWidget {
 class _AuthenticationScreenState extends State<AuthenticationScreen> {
   TextEditingController userNameController =
       TextEditingController(); // bhai inno na ap private bana
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController emailController =
+      TextEditingController(text: "arpit@gmail.com");
+  TextEditingController passwordController =
+      TextEditingController(text: "12345678");
   TextEditingController confirmPasswordController = TextEditingController();
 
 //   Dispose Bhi ker dena sare controller ko
@@ -116,22 +118,26 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                     ),
                   ),
                 SizedBoxHelper.sizedBox20,
-                CustomButton(
-                  onPressed: () {
-                    if (_key.currentState!.validate()) {
-                      if (provider.isLogin) {
-                        provider.signIn(
-                            email: emailController.text,
-                            password: passwordController.text);
-                      } else {
-                        provider.signUp(
-                            email: emailController.text,
-                            password: passwordController.text);
-                      }
-                    }
-                  },
-                  title: provider.isLogin ? "login" : "Register",
-                ),
+                (provider.isLoaded)
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : CustomButton(
+                        onPressed: () {
+                          if (_key.currentState!.validate()) {
+                            if (provider.isLogin) {
+                              provider.signIn(
+                                  email: emailController.text,
+                                  password: passwordController.text);
+                            } else {
+                              provider.signUp(
+                                  email: emailController.text,
+                                  password: passwordController.text);
+                            }
+                          }
+                        },
+                        title: provider.isLogin ? "login" : "Register",
+                      ),
                 MaterialButton(
                   onPressed: () {
                     provider.setIsLogin();

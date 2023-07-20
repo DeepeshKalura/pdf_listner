@@ -18,12 +18,23 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  signUp({required String email, required String password}) {
-    _firebaseAuth.createUserWithEmailAndPassword(
-        email: email, password: password);
+  bool _isLoaded = false;
+  bool get isLoaded => _isLoaded;
+  signUp({required String email, required String password}) async {
+    _isLoaded = true;
+    notifyListeners();
+    UserCredential userCredential = await _firebaseAuth
+        .createUserWithEmailAndPassword(email: email, password: password);
+    _isLoaded = false;
+    notifyListeners();
   }
-  signIn({required String email, required String password}) {
-    _firebaseAuth.signInWithEmailAndPassword(
-        email: email, password: password);
+
+  signIn({required String email, required String password}) async {
+    _isLoaded = true;
+    notifyListeners();
+    UserCredential userCredential = await _firebaseAuth
+        .signInWithEmailAndPassword(email: email, password: password);
+    _isLoaded = false;
+    notifyListeners();
   }
 }
