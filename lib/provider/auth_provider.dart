@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pdf_listner/helper/snackbar_helper.dart';
 
 class AuthProvider extends ChangeNotifier {
   bool _isLogin = true;
@@ -20,21 +21,51 @@ class AuthProvider extends ChangeNotifier {
 
   bool _isLoaded = false;
   bool get isLoaded => _isLoaded;
-  signUp({required String email, required String password}) async {
-    _isLoaded = true;
-    notifyListeners();
-    UserCredential userCredential = await _firebaseAuth
-        .createUserWithEmailAndPassword(email: email, password: password);
-    _isLoaded = false;
-    notifyListeners();
+  signUp(BuildContext context,
+      {required String email, required String password}) async {
+    try {
+      _isLoaded = true;
+      notifyListeners();
+      UserCredential userCredential = await _firebaseAuth
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((value) {
+        _isLoaded = false;
+        notifyListeners();
+        SnackBarHelper.showSucessSnackBar(context, "SignUp Successful");
+        return value;
+      });
+    } on FirebaseAuthException catch (firebaseError) {
+      _isLoaded = false;
+      notifyListeners();
+      SnackBarHelper.showErrorSnackBar(context, firebaseError.message!);
+    } catch (error) {
+      _isLoaded = false;
+      notifyListeners();
+      SnackBarHelper.showErrorSnackBar(context, error.toString());
+    }
   }
 
-  signIn({required String email, required String password}) async {
-    _isLoaded = true;
-    notifyListeners();
-    UserCredential userCredential = await _firebaseAuth
-        .signInWithEmailAndPassword(email: email, password: password);
-    _isLoaded = false;
-    notifyListeners();
+  signIn(BuildContext context,
+      {required String email, required String password}) async {
+    try {
+      _isLoaded = true;
+      notifyListeners();
+      UserCredential userCredential = await _firebaseAuth
+          .signInWithEmailAndPassword(email: email, password: password)
+          .then((value) {
+        _isLoaded = false;
+        notifyListeners();
+        SnackBarHelper.showSucessSnackBar(context, "SignIn Successful");
+        return value;
+      });
+    } on FirebaseAuthException catch (firebaseError) {
+      _isLoaded = false;
+      notifyListeners();
+      SnackBarHelper.showErrorSnackBar(context, firebaseError.message!);
+    } catch (error) {
+      _isLoaded = false;
+      notifyListeners();
+      SnackBarHelper.showErrorSnackBar(context, error.toString());
+    }
   }
 }
