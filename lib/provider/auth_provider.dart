@@ -101,4 +101,30 @@ class AuthProvider extends ChangeNotifier {
       SnackBarHelper.showErrorSnackBar(context, error.toString());
     }
   }
+
+  bool _isLoadingLogout = false;
+  bool get isLoadingLogout => _isLoadingLogout;
+  setLogout(bool value) {
+    _isLoadingLogout = value;
+    notifyListeners();
+  }
+
+  logOut(BuildContext context) async {
+    try {
+      setLogout(false);
+      await _firebaseAuth.signOut().then((value) {
+        setLogout(false);
+        SnackBarHelper.showSucessSnackBar(context, "successfully log out");
+        Navigator.of(context).pushNamed(AuthenticationScreen.routeName);
+      });
+    } on FirebaseAuthException catch (firebaseError) {
+      setLogout(false);
+
+      SnackBarHelper.showErrorSnackBar(context, firebaseError.message!);
+    } catch (error) {
+      setLogout(false);
+
+      SnackBarHelper.showErrorSnackBar(context, error.toString());
+    }
+  }
 }
