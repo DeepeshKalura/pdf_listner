@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pdf_listner/helper/snackbar_helper.dart';
+import 'package:pdf_listner/screens/authentication_screen.dart';
 import 'package:pdf_listner/screens/forgot_password_screen.dart';
+import 'package:pdf_listner/screens/home_screen.dart';
 
 class AuthProvider extends ChangeNotifier {
   bool _isLogin = true;
@@ -22,26 +24,31 @@ class AuthProvider extends ChangeNotifier {
 
   bool _isLoaded = false;
   bool get isLoaded => _isLoaded;
+  setIsLoading(bool value) {
+    _isLoaded = value;
+    notifyListeners();
+  }
+
   signUp(BuildContext context,
       {required String email, required String password}) async {
     try {
-      _isLoaded = true;
-      notifyListeners();
+      setIsLoading(true);
       UserCredential userCredential = await _firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((value) {
-        _isLoaded = false;
-        notifyListeners();
+        setIsLoading(false);
         SnackBarHelper.showSucessSnackBar(context, "SignUp Successful");
+        Navigator.of(context).pushNamed(AuthenticationScreen.routeName);
+        _isLogin = true;
+        notifyListeners();
+
         return value;
       });
     } on FirebaseAuthException catch (firebaseError) {
-      _isLoaded = false;
-      notifyListeners();
+      setIsLoading(false);
       SnackBarHelper.showErrorSnackBar(context, firebaseError.message!);
     } catch (error) {
-      _isLoaded = false;
-      notifyListeners();
+      setIsLoading(false);
       SnackBarHelper.showErrorSnackBar(context, error.toString());
     }
   }
@@ -49,47 +56,48 @@ class AuthProvider extends ChangeNotifier {
   signIn(BuildContext context,
       {required String email, required String password}) async {
     try {
-      _isLoaded = true;
-      notifyListeners();
+      setIsLoading(true);
       UserCredential userCredential = await _firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password)
           .then((value) {
-        _isLoaded = false;
-        notifyListeners();
+        setIsLoading(false);
         SnackBarHelper.showSucessSnackBar(context, "SignIn Successful");
+        Navigator.of(context).pushNamed(HomeScreen.routeName);
+
         return value;
       });
     } on FirebaseAuthException catch (firebaseError) {
-      _isLoaded = false;
-      notifyListeners();
+      setIsLoading(false);
       SnackBarHelper.showErrorSnackBar(context, firebaseError.message!);
     } catch (error) {
-      _isLoaded = false;
-      notifyListeners();
+      setIsLoading(false);
       SnackBarHelper.showErrorSnackBar(context, error.toString());
     }
   }
 
   bool _isForgetPassword = false;
   bool get isForgetPassword => _isForgetPassword;
+  setIsForgetPassword(bool value) {
+    _isForgetPassword = value;
+    notifyListeners();
+  }
 
   forgetPassword({required BuildContext context, required String email}) async {
     try {
-      _isForgetPassword = true;
-      notifyListeners();
+      setIsForgetPassword(true);
       await _firebaseAuth.sendPasswordResetEmail(email: email).then((value) {
-        _isForgetPassword = false;
-        notifyListeners();
+        setIsForgetPassword(false);
+
         SnackBarHelper.showSucessSnackBar(context, "Reset Email send!");
         return value;
       });
     } on FirebaseAuthException catch (firebaseError) {
-      _isForgetPassword = false;
-      notifyListeners();
+      setIsForgetPassword(false);
+
       SnackBarHelper.showErrorSnackBar(context, firebaseError.message!);
     } catch (error) {
-      _isForgetPassword = false;
-      notifyListeners();
+      setIsForgetPassword(false);
+
       SnackBarHelper.showErrorSnackBar(context, error.toString());
     }
   }
