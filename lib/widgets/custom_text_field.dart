@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
-  final String labelText;
+  final String? labelText;
   final IconData prefixIconData;
   final Widget? suffixIcon;
   final bool obscureText;
@@ -12,7 +12,7 @@ class CustomTextField extends StatelessWidget {
       {super.key,
       required this.controller,
       required this.hintText,
-      required this.labelText,
+      this.labelText,
       required this.prefixIconData,
       this.obscureText = false,
       this.suffixIcon,
@@ -20,15 +20,23 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      obscureText: obscureText,
-      validator: validator,
-      controller: controller,
-      decoration: InputDecoration(
-          hintText: hintText,
-          labelText: labelText,
-          prefixIcon: Icon(prefixIconData),
-          suffixIcon: suffixIcon),
+    return Container(
+      decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(5))),
+      child: TextFormField(
+        obscureText: obscureText,
+        validator: validator,
+        controller: controller,
+        decoration: InputDecoration(
+            hintText: hintText,
+            labelText: labelText,
+            prefixIcon: Icon(prefixIconData),
+            suffixIcon: IconButton(
+              icon: const Text("Go"),
+              onPressed: () {},
+            )),
+      ),
     );
   }
 }
