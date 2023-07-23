@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
       create: (_) => AuthProvider(),
       child: MaterialApp(
         theme: ThemeData(
+          textTheme: const TextTheme(headlineMedium: TextStyle(fontWeight: FontWeight.bold)),
             inputDecorationTheme: const InputDecorationTheme(
                 border: OutlineInputBorder(),
                 focusedBorder: OutlineInputBorder(
