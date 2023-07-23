@@ -7,7 +7,7 @@ import '../helper/sized_box_helper.dart';
 
 class FileCard extends StatelessWidget {
   final FileCardModel model;
-  const FileCard({super.key,required this.model});
+  const FileCard({super.key, required this.model});
 
   @override
   Widget build(BuildContext context) {

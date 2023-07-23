@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pdf_listner/firebase_options.dart';
 import 'package:pdf_listner/provider/auth_provider.dart';
+import 'package:pdf_listner/screens/add_document_screen.dart';
 import 'package:pdf_listner/screens/authentication_screen.dart';
 import 'package:pdf_listner/screens/forgot_password_screen.dart';
 import 'package:pdf_listner/screens/home_screen.dart';
@@ -33,7 +34,8 @@ class MyApp extends StatelessWidget {
               const AuthenticationScreen(),
           ForgotPasswordScreen.routeName: (context) =>
               const ForgotPasswordScreen(),
-          HomeScreen.routeName: (context) => const HomeScreen()
+          HomeScreen.routeName: (context) => const HomeScreen(),
+          AddDocumentScreen.routeName:(context)=> const AddDocumentScreen()
         },
       ),
     );
