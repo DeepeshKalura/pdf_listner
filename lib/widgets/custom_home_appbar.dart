@@ -34,6 +34,10 @@ class CustomHomeAppbar extends StatelessWidget implements PreferredSize {
               ),
               SizedBoxHelper.sizedBox20,
               CustomTextField(
+                  suffixIcon: IconButton(
+                    icon: Text("Go"),
+                    onPressed: () {},
+                  ),
                   controller: TextEditingController(),
                   hintText: "Enter the title of Document",
                   prefixIconData: Icons.search,

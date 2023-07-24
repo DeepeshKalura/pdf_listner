@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pdf_listner/firebase_options.dart';
 import 'package:pdf_listner/provider/auth_provider.dart';
+import 'package:pdf_listner/provider/document_provider.dart';
 import 'package:pdf_listner/screens/add_document_screen.dart';
 import 'package:pdf_listner/screens/authentication_screen.dart';
 import 'package:pdf_listner/screens/forgot_password_screen.dart';
@@ -19,8 +20,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => AuthProvider(),
+    return MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_)=>AuthProvider()),
+      ChangeNotifierProvider(create: (_)=>DocumentProvider()
+      )],
       child: MaterialApp(
         theme: ThemeData(
           textTheme: const TextTheme(headlineMedium: TextStyle(fontWeight: FontWeight.bold)),

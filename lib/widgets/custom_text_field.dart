@@ -32,11 +32,8 @@ class CustomTextField extends StatelessWidget {
             hintText: hintText,
             labelText: labelText,
             prefixIcon: Icon(prefixIconData),
-            suffixIcon: IconButton(
-              icon: const Text("Go"),
-              onPressed: () {},
-            )),
-      ),
+            suffixIcon:suffixIcon,
+       ) ),
     );
   }
 }
