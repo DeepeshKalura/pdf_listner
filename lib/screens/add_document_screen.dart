@@ -58,44 +58,46 @@ class _AddDocumentScreenState extends State<AddDocumentScreen> {
             labelText: "please enter the note",
           ),
           SizedBoxHelper.sizedBox20,
-          Consumer<DocumentProvider>(builder: (context, provider, child) {
-            return InkWell(
-              onTap: () {
-                provider.pickDocuments(context);
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(color: Colors.grey),
-                ),
-                height: MediaQuery.of(context).size.height * 0.15,
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text("fileName"),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(
-                          Icons.add,
-                          size: 30,
-                          color: Colors.grey,
-                        ),
-                        Text(
-                          "Upload file",
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleLarge!
-                              .copyWith(color: Colors.grey),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+          InkWell(
+            onTap: () {
+              Provider.of<DocumentProvider>(context, listen: false)
+                  .pickDocuments(context);
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                border: Border.all(color: Colors.grey),
               ),
-            );
-          }),
+              height: MediaQuery.of(context).size.height * 0.15,
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Consumer<DocumentProvider>(
+                      builder: (context, provider, child) {
+                    return Text(provider.selectedFilName);
+                  }),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Icons.add,
+                        size: 30,
+                        color: Colors.grey,
+                      ),
+                      Text(
+                        "Upload file",
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleLarge!
+                            .copyWith(color: Colors.grey),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
         ]),
       )),
     );
