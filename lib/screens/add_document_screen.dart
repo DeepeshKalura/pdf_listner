@@ -20,15 +20,19 @@ class _AddDocumentScreenState extends State<AddDocumentScreen> {
   TextEditingController noteController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final _provider = Provider.of<DocumentProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Add Documents"),
+        title: const Text("Add Documents"),
         centerTitle: true,
       ),
       floatingActionButton: CustomFloatingActionButton(
         iconData: Icons.check,
         title: "Upload",
-        onTap: () {},
+        onTap: () {
+          _provider.sendDocumentData(
+              title: titleController.text, note: noteController.text);
+        },
       ),
       body: ScreenBackground(
           child: Form(
@@ -60,8 +64,7 @@ class _AddDocumentScreenState extends State<AddDocumentScreen> {
           SizedBoxHelper.sizedBox20,
           InkWell(
             onTap: () {
-              Provider.of<DocumentProvider>(context, listen: false)
-                  .pickDocuments(context);
+              _provider.pickDocuments(context);
             },
             child: Container(
               decoration: BoxDecoration(

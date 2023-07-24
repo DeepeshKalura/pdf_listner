@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:pdf_listner/helper/snackbar_helper.dart';
 import 'package:pdf_listner/screens/authentication_screen.dart';
@@ -8,7 +9,8 @@ import 'package:pdf_listner/screens/home_screen.dart';
 class AuthProvider extends ChangeNotifier {
   bool _isLogin = true;
   bool get isLogin => _isLogin;
-  FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
 
   setIsLogin() {
     _isLogin = !_isLogin;
@@ -127,4 +129,6 @@ class AuthProvider extends ChangeNotifier {
       SnackBarHelper.showErrorSnackBar(context, error.toString());
     }
   }
+
+
 }

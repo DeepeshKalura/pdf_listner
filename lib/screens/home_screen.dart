@@ -18,7 +18,13 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        floatingActionButton:CustomFloatingActionButton(iconData: Icons.add,title: "Add File",onTap: (){Navigator.pushNamed(context, AddDocumentScreen.routeName);},),
+        floatingActionButton: CustomFloatingActionButton(
+          iconData: Icons.add,
+          title: "Add File",
+          onTap: () {
+            Navigator.pushNamed(context, AddDocumentScreen.routeName);
+          },
+        ),
         appBar: const CustomHomeAppbar(),
         body: ScreenBackground(
           child: ListView(
@@ -29,7 +35,8 @@ class HomeScreen extends StatelessWidget {
                       title: "Title",
                       subTitle: "subtitle",
                       dateAdded: DateTime.now().toString().substring(0, 10),
-                      fileType: "pdf")),
+                      fileType: "pdf",
+                      fileUrl: "")),
             ],
           ),
         ),
