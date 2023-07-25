@@ -7,6 +7,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:pdf_listner/helper/snackbar_helper.dart';
 
 class DocumentProvider extends ChangeNotifier {
+  TextEditingController titleController = TextEditingController();
+  TextEditingController noteController = TextEditingController();
   String _selectedFileName = "";
   final FirebaseDatabase _firebaseDatabase = FirebaseDatabase.instance;
   final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
@@ -33,21 +35,46 @@ class DocumentProvider extends ChangeNotifier {
     });
   }
 
-  sendDocumentData({required String title, required String note}) async {
-    UploadTask uploadTask = _firebaseStorage
-        .ref()
-        .child("files")
-        .child(selectedFilName)
-        .putFile(_file!);
-    TaskSnapshot taskSnapshot = await uploadTask;
-    String uploadedFileUrl = await taskSnapshot.ref.getDownloadURL();
-    await _firebaseDatabase.ref().child("files_info").push().set({
-      "title": title,
-      "note": note,
-      "filename": _selectedFileName,
-      "fileUrl": uploadedFileUrl,
-      "dateAdded": DateTime.now().toString(),
-      "fileType": _selectedFileName.split(".").last,
-    });
+  bool _isFileUploading = false;
+  bool get isFileUploaded => _isFileUploading;
+  setIsFileUploaded(bool value) {
+    _isFileUploading = value;
+    notifyListeners();
+  }
+
+  sendDocumentData({required BuildContext context}) async {
+    try {
+      setIsFileUploaded(true);
+      UploadTask uploadTask = _firebaseStorage
+          .ref()
+          .child("files")
+          .child(selectedFilName)
+          .putFile(_file!);
+      TaskSnapshot taskSnapshot = await uploadTask;
+      String uploadedFileUrl = await taskSnapshot.ref.getDownloadURL();
+      await _firebaseDatabase.ref().child("files_info").push().set({
+        "title": titleController.text,
+        "note": noteController.text,
+        "filename": _selectedFileName,
+        "fileUrl": uploadedFileUrl,
+        "dateAdded": DateTime.now().toString(),
+        "fileType": _selectedFileName.split(".").last,
+      });
+      resetAll();
+      setIsFileUploaded(false);
+    } on FirebaseException catch (firebaseError) {
+      setIsFileUploaded(false);
+      SnackBarHelper.showErrorSnackBar(context, firebaseError.message!);
+    } catch (error) {
+      setIsFileUploaded(false);
+      SnackBarHelper.showErrorSnackBar(context, error.toString());
+    }
+  }
+
+  resetAll() {
+    titleController = TextEditingController();
+    noteController = TextEditingController();
+    _selectedFileName = "";
+    _file = null;
   }
 }

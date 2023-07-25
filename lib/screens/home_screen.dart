@@ -1,3 +1,5 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:pdf_listner/helper/sized_box_helper.dart';
 import 'package:pdf_listner/models/file_card_model.dart';
@@ -27,18 +29,36 @@ class HomeScreen extends StatelessWidget {
         ),
         appBar: const CustomHomeAppbar(),
         body: ScreenBackground(
-          child: ListView(
-            physics: const BouncingScrollPhysics(),
-            children: [
-              FileCard(
-                  model: FileCardModel(
-                      title: "Title",
-                      subTitle: "subtitle",
-                      dateAdded: DateTime.now().toString().substring(0, 10),
-                      fileType: "pdf",
-                      fileUrl: "")),
-            ],
-          ),
+          child: StreamBuilder<DatabaseEvent>(
+              stream:
+                  FirebaseDatabase.instance.ref().child("files_info").onValue,
+              builder: (context, snapshot) {
+                if (snapshot.hasData && snapshot.data!.snapshot.value != null) {
+                  List<FileCardModel> _list = [];
+                  (snapshot.data!.snapshot.value as Map<dynamic, dynamic>)
+                      .forEach((key, value) {
+                    print(key);
+                    print(value);
+                    _list.add(FileCardModel.fromJson(value));
+                  });
+                  return ListView(
+                      physics: const BouncingScrollPhysics(),
+                      children: _list
+                          .map(
+                            (e) => FileCard(
+                                model: FileCardModel(
+                                    title: e.title,
+                                    subTitle: e.subTitle,
+                                    dateAdded: e.dateAdded,
+                                    fileType: e.fileType,
+                                    fileUrl: e.fileUrl,
+                                    fileName: e.fileName)),
+                          )
+                          .toList());
+                } else {
+                  return Text("no data");
+                }
+              }),
         ),
       ),
     );

@@ -128,6 +128,7 @@ class AuthProvider extends ChangeNotifier {
 
       SnackBarHelper.showErrorSnackBar(context, error.toString());
     }
+    
   }
 
 

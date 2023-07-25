@@ -32,20 +32,25 @@ class FileCard extends StatelessWidget {
                   width: 50,
                 ),
                 SizedBoxHelper.sizedBox_5,
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      model.title,
-                      style: Theme.of(context).textTheme.headlineMedium,
-                    ),
-                    Text(
-                      model.subTitle,
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    Text(model.dateAdded,
-                        style: Theme.of(context).textTheme.bodySmall)
-                  ],
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.45,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        model.title,
+                        style: Theme.of(context).textTheme.headlineMedium,
+                        maxLines: 2,
+                      ),
+                      Text(
+                        model.subTitle,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(model.dateAdded,
+                          style: Theme.of(context).textTheme.bodySmall)
+                    ],
+                  ),
                 ),
               ],
             ),

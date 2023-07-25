@@ -21,12 +21,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_)=>AuthProvider()),
-      ChangeNotifierProvider(create: (_)=>DocumentProvider()
-      )],
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => DocumentProvider())
+      ],
       child: MaterialApp(
         theme: ThemeData(
-          textTheme: const TextTheme(headlineMedium: TextStyle(fontWeight: FontWeight.bold)),
+            textTheme: const TextTheme(
+                headlineMedium:
+                    TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
             inputDecorationTheme: const InputDecorationTheme(
                 border: OutlineInputBorder(),
                 focusedBorder: OutlineInputBorder(
@@ -38,7 +41,7 @@ class MyApp extends StatelessWidget {
           ForgotPasswordScreen.routeName: (context) =>
               const ForgotPasswordScreen(),
           HomeScreen.routeName: (context) => const HomeScreen(),
-          AddDocumentScreen.routeName:(context)=> const AddDocumentScreen()
+          AddDocumentScreen.routeName: (context) => const AddDocumentScreen()
         },
       ),
     );
