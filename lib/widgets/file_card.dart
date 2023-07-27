@@ -12,6 +12,7 @@ class FileCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.only(bottom: 10),
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
           color: Colors.white,
@@ -27,10 +28,15 @@ class FileCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                Image.asset(
-                  "assets/images/icon_pdf_type.png",
-                  width: 50,
-                ),
+                (model.fileType == "pdf")
+                    ? Image.asset(
+                        "assets/images/icon_pdf_type.png",
+                        width: 50,
+                      )
+                    : Image.asset(
+                        "assets/images/icon_image_type.png",
+                        width: 50,
+                      ),
                 SizedBoxHelper.sizedBox_5,
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.45,
@@ -47,7 +53,7 @@ class FileCard extends StatelessWidget {
                         style: Theme.of(context).textTheme.bodyLarge,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      Text(model.dateAdded,
+                      Text(model.dateAdded.substring(0, 10),
                           style: Theme.of(context).textTheme.bodySmall)
                     ],
                   ),

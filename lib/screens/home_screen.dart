@@ -37,8 +37,6 @@ class HomeScreen extends StatelessWidget {
                   List<FileCardModel> _list = [];
                   (snapshot.data!.snapshot.value as Map<dynamic, dynamic>)
                       .forEach((key, value) {
-                    print(key);
-                    print(value);
                     _list.add(FileCardModel.fromJson(value));
                   });
                   return ListView(
@@ -55,8 +53,20 @@ class HomeScreen extends StatelessWidget {
                                     fileName: e.fileName)),
                           )
                           .toList());
+                } else if (snapshot.connectionState ==
+                    ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
                 } else {
-                  return Text("no data");
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        "assets/images/icon_no_file.png",
+                        height: 100,
+                      ),
+                      Text("no data"),
+                    ],
+                  );
                 }
               }),
         ),
