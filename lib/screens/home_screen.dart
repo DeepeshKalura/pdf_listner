@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -25,10 +26,11 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController searchController = TextEditingController();
   StreamController<DatabaseEvent> streamController = StreamController();
+  String userId = FirebaseAuth.instance.currentUser!.uid;
   setStream() {
     FirebaseDatabase.instance
         .ref()
-        .child("files_info")
+        .child("files_info/$userId")
         .orderByChild("title")
         .startAt(searchController.text)
         .endAt("${searchController.text}" "\uf8ff")

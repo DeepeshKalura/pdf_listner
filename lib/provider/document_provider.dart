@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +43,7 @@ class DocumentProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  String userId = FirebaseAuth.instance.currentUser!.uid;
   sendDocumentData({required BuildContext context}) async {
     try {
       setIsFileUploaded(true);
@@ -52,7 +54,7 @@ class DocumentProvider extends ChangeNotifier {
           .putFile(_file!);
       TaskSnapshot taskSnapshot = await uploadTask;
       String uploadedFileUrl = await taskSnapshot.ref.getDownloadURL();
-      await _firebaseDatabase.ref().child("files_info").push().set({
+      await _firebaseDatabase.ref().child("files_info/$userId").push().set({
         "title": titleController.text,
         "note": noteController.text,
         "filename": _selectedFileName,
