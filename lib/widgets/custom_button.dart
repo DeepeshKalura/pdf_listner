@@ -12,7 +12,7 @@ class CustomButton extends StatelessWidget {
       height: 60,
       color: const Color(0xFe11e5376),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10),),
-      child: Text(title,style: TextStyle(color: Colors.white),),
+      child: Text(title,style: const TextStyle(color: Colors.white),),
     );
   }
 }

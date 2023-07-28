@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -12,9 +14,35 @@ import 'package:pdf_listner/widgets/file_card.dart';
 import 'package:pdf_listner/widgets/screen_background.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   static String routeName = "/homeScreen";
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  TextEditingController searchController = TextEditingController();
+  StreamController<DatabaseEvent> streamController = StreamController();
+  setStream() {
+    FirebaseDatabase.instance
+        .ref()
+        .child("files_info")
+        .orderByChild("title")
+        .startAt(searchController.text)
+        .endAt("${searchController.text}" "\uf8ff")
+        .onValue
+        .listen((event) {
+      streamController.add(event);
+    });
+  }
+
+  @override
+  void initState() {
+    setStream();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +55,15 @@ class HomeScreen extends StatelessWidget {
             Navigator.pushNamed(context, AddDocumentScreen.routeName);
           },
         ),
-        appBar: const CustomHomeAppbar(),
+        appBar: CustomHomeAppbar(
+          controller: searchController,
+          onsearch: () {
+            setStream();
+          },
+        ),
         body: ScreenBackground(
           child: StreamBuilder<DatabaseEvent>(
-              stream:
-                  FirebaseDatabase.instance.ref().child("files_info").onValue,
+              stream: streamController.stream,
               builder: (context, snapshot) {
                 if (snapshot.hasData && snapshot.data!.snapshot.value != null) {
                   List<FileCardModel> _list = [];

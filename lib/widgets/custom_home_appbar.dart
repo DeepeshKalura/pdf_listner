@@ -4,7 +4,9 @@ import '../helper/sized_box_helper.dart';
 import 'custom_text_field.dart';
 
 class CustomHomeAppbar extends StatelessWidget implements PreferredSize {
-  const CustomHomeAppbar({super.key});
+  final TextEditingController controller;
+  final VoidCallback onsearch;
+  const CustomHomeAppbar({super.key, required this.controller,required this.onsearch});
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +38,9 @@ class CustomHomeAppbar extends StatelessWidget implements PreferredSize {
               CustomTextField(
                   suffixIcon: IconButton(
                     icon: Text("Go"),
-                    onPressed: () {},
+                    onPressed:onsearch,
                   ),
-                  controller: TextEditingController(),
+                  controller: controller,
                   hintText: "Enter the title of Document",
                   prefixIconData: Icons.search,
                   validator: (value) {
