@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:pdf_listner/models/file_card_model.dart';
+import 'package:pdf_listner/provider/document_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../helper/sized_box_helper.dart';
 
@@ -69,7 +71,53 @@ class FileCard extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleLarge,
                     )),
                 IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              titleTextStyle: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20),
+                              backgroundColor: Colors.red,
+                              title: const Text("Do you want to delete?"),
+                              content: Text(
+                                model.title,
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20),
+                              ),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text(
+                                      "Cancel",
+                                      style: TextStyle(color: Colors.white),
+                                    )),
+                                TextButton(
+                                    onPressed: () {
+                                      Provider.of<DocumentProvider>(context,
+                                              listen: false)
+                                          .deleteDocument(
+                                              model.id, model.fileName, context)
+                                          .then((value) {
+                                        Navigator.pop(context);
+                                      });
+                                    },
+                                    child: const Text(
+                                      "Yes",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                    )),
+                              ],
+                            );
+                          });
+                    },
                     icon: const Icon(
                       Icons.delete,
                       color: Colors.red,

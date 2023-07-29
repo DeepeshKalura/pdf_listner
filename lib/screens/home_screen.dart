@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   List<FileCardModel> _list = [];
                   (snapshot.data!.snapshot.value as Map<dynamic, dynamic>)
                       .forEach((key, value) {
-                    _list.add(FileCardModel.fromJson(value));
+                    _list.add(FileCardModel.fromJson(value,key));
                   });
                   return ListView(
                       physics: const BouncingScrollPhysics(),
@@ -84,7 +84,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     dateAdded: e.dateAdded,
                                     fileType: e.fileType,
                                     fileUrl: e.fileUrl,
-                                    fileName: e.fileName)),
+                                    fileName: e.fileName,
+                                    id: e.id
+                                    )),
                           )
                           .toList());
                 } else if (snapshot.connectionState ==

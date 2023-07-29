@@ -5,6 +5,7 @@ class FileCardModel {
   final String fileType;
   final String fileUrl;
   final String fileName;
+  final String id;
 
   FileCardModel(
       {required this.title,
@@ -12,10 +13,12 @@ class FileCardModel {
       required this.dateAdded,
       required this.fileType,
       required this.fileUrl,
-      required this.fileName});
+      required this.fileName,
+      required this.id});
 
-  factory FileCardModel.fromJson(Map<dynamic, dynamic> json) {
+  factory FileCardModel.fromJson(Map<dynamic, dynamic> json, String id) {
     return FileCardModel(
+        id: id,
         title: json["title"].toString(),
         subTitle: json["note"].toString(),
         dateAdded: json["dateAdded"].toString(),
@@ -24,3 +27,4 @@ class FileCardModel {
         fileName: json["fileName"].toString());
   }
 }
+

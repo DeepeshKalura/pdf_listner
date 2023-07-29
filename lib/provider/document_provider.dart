@@ -49,7 +49,7 @@ class DocumentProvider extends ChangeNotifier {
       setIsFileUploaded(true);
       UploadTask uploadTask = _firebaseStorage
           .ref()
-          .child("files")
+          .child("files/$userId")
           .child(selectedFilName)
           .putFile(_file!);
       TaskSnapshot taskSnapshot = await uploadTask;
@@ -57,7 +57,7 @@ class DocumentProvider extends ChangeNotifier {
       await _firebaseDatabase.ref().child("files_info/$userId").push().set({
         "title": titleController.text,
         "note": noteController.text,
-        "filename": _selectedFileName,
+        "fileName": _selectedFileName,
         "fileUrl": uploadedFileUrl,
         "dateAdded": DateTime.now().toString(),
         "fileType": _selectedFileName.split(".").last,
@@ -78,5 +78,24 @@ class DocumentProvider extends ChangeNotifier {
     noteController = TextEditingController();
     _selectedFileName = "";
     _file = null;
+  }
+
+  Future<void> deleteDocument(
+      String id, String fileName, BuildContext context) async {
+    try {
+      await _firebaseStorage.ref().child("files/$userId/$fileName").delete();
+      await _firebaseDatabase
+          .ref()
+          .child("files_info/$userId/$id")
+          .remove()
+          .then((value) {
+        SnackBarHelper.showSucessSnackBar(
+            context, " $fileName Document Deleted Sucessfully");
+      });
+    } on FirebaseAuthException catch (firebaseError) {
+      SnackBarHelper.showErrorSnackBar(context, firebaseError.message!);
+    } catch (error) {
+      SnackBarHelper.showErrorSnackBar(context, error.toString());
+    }
   }
 }
