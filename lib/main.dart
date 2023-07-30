@@ -5,6 +5,7 @@ import 'package:pdf_listner/provider/auth_provider.dart';
 import 'package:pdf_listner/provider/document_provider.dart';
 import 'package:pdf_listner/screens/add_document_screen.dart';
 import 'package:pdf_listner/screens/authentication_screen.dart';
+import 'package:pdf_listner/screens/document_view_screen.dart';
 import 'package:pdf_listner/screens/forgot_password_screen.dart';
 import 'package:pdf_listner/screens/home_screen.dart';
 import 'package:provider/provider.dart';
@@ -41,7 +42,8 @@ class MyApp extends StatelessWidget {
           ForgotPasswordScreen.routeName: (context) =>
               const ForgotPasswordScreen(),
           HomeScreen.routeName: (context) => const HomeScreen(),
-          AddDocumentScreen.routeName: (context) => const AddDocumentScreen()
+          AddDocumentScreen.routeName: (context) => const AddDocumentScreen(),
+          DocumentViewScreen.routeName:(context) => const DocumentViewScreen(),
         },
       ),
     );

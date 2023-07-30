@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:pdf_listner/models/file_card_model.dart';
 import 'package:pdf_listner/provider/document_provider.dart';
+import 'package:pdf_listner/screens/document_view_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../helper/sized_box_helper.dart';
@@ -65,7 +66,13 @@ class FileCard extends StatelessWidget {
             Row(
               children: [
                 InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).pushNamed(
+                          DocumentViewScreen.routeName,
+                          arguments: DocumentViewScreenArgs(
+                              fileName: model.fileName,
+                              fileUrl: model.fileUrl,fileType: model.fileType));
+                    },
                     child: Text(
                       "view",
                       style: Theme.of(context).textTheme.titleLarge,
