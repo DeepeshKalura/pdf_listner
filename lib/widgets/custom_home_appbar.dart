@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pdf_listner/screens/settings_screen.dart';
 
 import '../helper/sized_box_helper.dart';
 import 'custom_text_field.dart';
@@ -6,7 +7,8 @@ import 'custom_text_field.dart';
 class CustomHomeAppbar extends StatelessWidget implements PreferredSize {
   final TextEditingController controller;
   final VoidCallback onsearch;
-  const CustomHomeAppbar({super.key, required this.controller,required this.onsearch});
+  const CustomHomeAppbar(
+      {super.key, required this.controller, required this.onsearch});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,9 @@ class CustomHomeAppbar extends StatelessWidget implements PreferredSize {
                     width: 150,
                   ),
                   IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, SettingScreen.routeName);
+                      },
                       icon: const Icon(
                         Icons.settings,
                         color: Colors.white,
@@ -38,7 +42,7 @@ class CustomHomeAppbar extends StatelessWidget implements PreferredSize {
               CustomTextField(
                   suffixIcon: IconButton(
                     icon: Text("Go"),
-                    onPressed:onsearch,
+                    onPressed: onsearch,
                   ),
                   controller: controller,
                   hintText: "Enter the title of Document",

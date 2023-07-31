@@ -130,7 +130,8 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                           } else {
                             provider.signUp(context,
                                 email: emailController.text,
-                                password: passwordController.text);
+                                password: passwordController.text,
+                                username: userNameController.text);
                           }
                         }
                       },

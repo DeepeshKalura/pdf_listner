@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:pdf_listner/firebase_options.dart';
 import 'package:pdf_listner/provider/auth_provider.dart';
 import 'package:pdf_listner/provider/document_provider.dart';
+import 'package:pdf_listner/provider/user_info_provider.dart';
 import 'package:pdf_listner/screens/add_document_screen.dart';
 import 'package:pdf_listner/screens/authentication_screen.dart';
 import 'package:pdf_listner/screens/document_view_screen.dart';
 import 'package:pdf_listner/screens/forgot_password_screen.dart';
 import 'package:pdf_listner/screens/home_screen.dart';
+import 'package:pdf_listner/screens/settings_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -24,7 +26,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
-        ChangeNotifierProvider(create: (_) => DocumentProvider())
+        ChangeNotifierProvider(create: (_) => DocumentProvider()),
+        ChangeNotifierProvider(create: (_) => UserInfoProvider()),
       ],
       child: MaterialApp(
         theme: ThemeData(
@@ -43,7 +46,8 @@ class MyApp extends StatelessWidget {
               const ForgotPasswordScreen(),
           HomeScreen.routeName: (context) => const HomeScreen(),
           AddDocumentScreen.routeName: (context) => const AddDocumentScreen(),
-          DocumentViewScreen.routeName:(context) => const DocumentViewScreen(),
+          DocumentViewScreen.routeName: (context) => const DocumentViewScreen(),
+          SettingScreen.routeName: (context) => const SettingScreen(),
         },
       ),
     );

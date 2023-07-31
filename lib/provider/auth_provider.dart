@@ -10,7 +10,7 @@ class AuthProvider extends ChangeNotifier {
   bool _isLogin = true;
   bool get isLogin => _isLogin;
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-
+  final FirebaseDatabase _firebaseDatabase = FirebaseDatabase.instance;
 
   setIsLogin() {
     _isLogin = !_isLogin;
@@ -32,12 +32,15 @@ class AuthProvider extends ChangeNotifier {
   }
 
   signUp(BuildContext context,
-      {required String email, required String password}) async {
+      {required String email, required String password,required String username}) async {
     try {
       setIsLoading(true);
       UserCredential userCredential = await _firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password)
-          .then((value) {
+          .then((value) async{
+       await  _firebaseDatabase.ref().child("user_info/${value.user!.uid}").set({
+          "username":username,
+        });
         setIsLoading(false);
         SnackBarHelper.showSucessSnackBar(context, "SignUp Successful");
         Navigator.of(context).pushNamed(AuthenticationScreen.routeName);
@@ -128,8 +131,5 @@ class AuthProvider extends ChangeNotifier {
 
       SnackBarHelper.showErrorSnackBar(context, error.toString());
     }
-    
   }
-
-
 }
