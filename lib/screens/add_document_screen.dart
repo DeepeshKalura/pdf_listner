@@ -33,6 +33,7 @@ class _AddDocumentScreenState extends State<AddDocumentScreen> {
                 iconData: Icons.check,
                 title: "Upload",
                 onTap: () {
+                  FocusScope.of(context).unfocus();
                   _provider.sendDocumentData(context: context);
                 },
               );
@@ -71,6 +72,7 @@ class _AddDocumentScreenState extends State<AddDocumentScreen> {
           SizedBoxHelper.sizedBox20,
           InkWell(
             onTap: () {
+              FocusScope.of(context).unfocus();
               _provider.pickDocuments(context);
             },
             child: Container(

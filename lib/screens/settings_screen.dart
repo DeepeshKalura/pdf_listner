@@ -76,6 +76,7 @@ class SettingScreen extends StatelessWidget {
             leadingIconData: Icons.logout,
             trailing: IconButton(
                 onPressed: () {
+                  
                   Provider.of<AuthProvider>(context, listen: false)
                       .logOut(context);
                 },

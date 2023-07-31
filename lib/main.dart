@@ -10,6 +10,7 @@ import 'package:pdf_listner/screens/document_view_screen.dart';
 import 'package:pdf_listner/screens/forgot_password_screen.dart';
 import 'package:pdf_listner/screens/home_screen.dart';
 import 'package:pdf_listner/screens/settings_screen.dart';
+import 'package:pdf_listner/screens/splash_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
                 border: OutlineInputBorder(),
                 focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.blue, width: 2)))),
-        initialRoute: AuthenticationScreen.routeName,
+        initialRoute: SplashScreen.routeName,
         routes: {
           AuthenticationScreen.routeName: (context) =>
               const AuthenticationScreen(),
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
           AddDocumentScreen.routeName: (context) => const AddDocumentScreen(),
           DocumentViewScreen.routeName: (context) => const DocumentViewScreen(),
           SettingScreen.routeName: (context) => const SettingScreen(),
+          SplashScreen.routeName: (context) => const SplashScreen(),
         },
       ),
     );

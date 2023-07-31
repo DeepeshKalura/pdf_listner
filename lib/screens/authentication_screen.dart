@@ -122,12 +122,14 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                     )
                   : CustomButton(
                       onPressed: () {
+                        FocusScope.of(context).unfocus();
                         if (_key.currentState!.validate()) {
                           if (provider.isLogin) {
                             provider.signIn(context,
                                 email: emailController.text,
                                 password: passwordController.text);
                           } else {
+                            FocusScope.of(context).unfocus();
                             provider.signUp(context,
                                 email: emailController.text,
                                 password: passwordController.text,

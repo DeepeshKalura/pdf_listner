@@ -32,18 +32,23 @@ class AuthProvider extends ChangeNotifier {
   }
 
   signUp(BuildContext context,
-      {required String email, required String password,required String username}) async {
+      {required String email,
+      required String password,
+      required String username}) async {
     try {
       setIsLoading(true);
       UserCredential userCredential = await _firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password)
-          .then((value) async{
-       await  _firebaseDatabase.ref().child("user_info/${value.user!.uid}").set({
-          "username":username,
+          .then((value) async {
+        await _firebaseDatabase
+            .ref()
+            .child("user_info/${value.user!.uid}")
+            .set({
+          "username": username,
         });
         setIsLoading(false);
         SnackBarHelper.showSucessSnackBar(context, "SignUp Successful");
-        Navigator.of(context).pushNamed(AuthenticationScreen.routeName);
+        Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
         _isLogin = true;
         notifyListeners();
 
@@ -67,7 +72,7 @@ class AuthProvider extends ChangeNotifier {
           .then((value) {
         setIsLoading(false);
         SnackBarHelper.showSucessSnackBar(context, "SignIn Successful");
-        Navigator.of(context).pushNamed(HomeScreen.routeName);
+        Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
 
         return value;
       });
@@ -120,7 +125,8 @@ class AuthProvider extends ChangeNotifier {
       await _firebaseAuth.signOut().then((value) {
         setLogout(false);
         SnackBarHelper.showSucessSnackBar(context, "successfully log out");
-        Navigator.of(context).pushNamed(AuthenticationScreen.routeName);
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.pushReplacementNamed(context, AuthenticationScreen.routeName);
       });
     } on FirebaseAuthException catch (firebaseError) {
       setLogout(false);

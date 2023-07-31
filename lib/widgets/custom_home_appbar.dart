@@ -30,6 +30,7 @@ class CustomHomeAppbar extends StatelessWidget implements PreferredSize {
                   ),
                   IconButton(
                       onPressed: () {
+                        FocusScope.of(context).unfocus();
                         Navigator.pushNamed(context, SettingScreen.routeName);
                       },
                       icon: const Icon(
